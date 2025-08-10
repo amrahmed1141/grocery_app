@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/utils/constant.dart';
+import 'package:eshop_app/utils/constant.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

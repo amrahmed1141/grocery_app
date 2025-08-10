@@ -1,10 +1,8 @@
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:eshop_app/views/cart/cart.dart';
+import 'package:eshop_app/views/favorite/favorites.dart';
+import 'package:eshop_app/views/home/home.dart';
+import 'package:eshop_app/views/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_app/utils/constant.dart';
-import 'package:grocery_app/views/cart/cart.dart';
-import 'package:grocery_app/views/favorite/favorites.dart';
-import 'package:grocery_app/views/home/home.dart';
-import 'package:grocery_app/views/profile/profile.dart';
 import 'package:iconsax/iconsax.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -15,8 +13,8 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final _pageController = PageController(initialPage: 0);
-  final _controller = NotchBottomBarController(index: 0);
+  int _currentIndex = 0;
+  final PageController _pageController = PageController();
 
   final List<Widget> _pages = [
     const HomeScreen(),
@@ -34,66 +32,76 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondryColor,
+      backgroundColor: Colors.white,
+      extendBody: true,
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: _pages,
       ),
-      bottomNavigationBar: AnimatedNotchBottomBar(
-        notchBottomBarController: _controller,
-        onTap: (index) {
-          _pageController.jumpToPage(index);
-        },
-        notchColor: primaryColor,
-        kIconSize: 24,
-        kBottomRadius: 28,
-        bottomBarItems: const[
-          BottomBarItem(
-            inActiveItem: Icon(
-              Iconsax.home,
-              color:primaryColor,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 16,
+              spreadRadius: 0,
+              offset: const Offset(0, -4),
             ),
-            activeItem: Icon(
-              Iconsax.home,
-              color:secondryColor,
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(Iconsax.home, 'Home', 0),
+            _buildNavItem(Iconsax.shop, 'Shop', 1),
+            _buildNavItem(Iconsax.heart, 'Wishlist', 2),
+            _buildNavItem(Iconsax.user, 'Profile', 3),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    final isSelected = _currentIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() => _currentIndex = index);
+        _pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeOutQuint,
+        );
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: isSelected ? Colors.deepPurple.withOpacity(0.1) : Colors.transparent,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 24,
+              color: isSelected ? Colors.deepPurple : Colors.grey[600],
             ),
-            itemLabel: 'Home',
-          ),
-           BottomBarItem(
-            inActiveItem: Icon(
-              Iconsax.heart,
-              color: primaryColor,
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: isSelected ? Colors.deepPurple : Colors.grey[600],
+              ),
             ),
-            activeItem: Icon(
-              Iconsax.heart,
-              color: secondryColor,
-            ),
-            itemLabel: 'Favorites',
-          ),
-           BottomBarItem(
-            inActiveItem: Icon(
-              Iconsax.shopping_bag,
-              color: primaryColor,
-            ),
-            activeItem: Icon(
-              Iconsax.shopping_bag,
-              color:secondryColor,
-            ),
-            itemLabel: 'Cart',
-          ),
-           BottomBarItem(
-            inActiveItem: Icon(
-                 Iconsax.user,
-              color: primaryColor,
-            ),
-            activeItem: Icon(
-              Iconsax.user,
-              color:secondryColor,
-            ),
-            itemLabel: 'Profile',
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

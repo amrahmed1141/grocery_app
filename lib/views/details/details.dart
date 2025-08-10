@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/utils/constant.dart';
-import 'package:grocery_app/utils/rating.dart';
+import 'package:eshop_app/utils/constant.dart';
+import 'package:eshop_app/utils/rating.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 

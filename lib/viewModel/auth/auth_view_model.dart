@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:grocery_app/models/user_model.dart';
-import 'package:grocery_app/services/shared_perefrence.dart';
+import 'package:eshop_app/models/auth/user_model.dart';
+import 'package:eshop_app/services/shared_perefrence.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;

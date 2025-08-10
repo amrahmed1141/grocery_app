@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:grocery_app/bottom_navigation/bottom_navigation.dart';
-import 'package:grocery_app/utils/constant.dart';
-import 'package:grocery_app/utils/validation.dart';
-import 'package:grocery_app/viewModel/auth_view_model.dart';
-import 'package:grocery_app/views/auth/clipper/clipper.dart';
-import 'package:grocery_app/views/auth/signup.dart';
+import 'package:eshop_app/bottom_navigation/bottom_navigation.dart';
+import 'package:eshop_app/utils/constant.dart';
+import 'package:eshop_app/utils/validation.dart';
+import 'package:eshop_app/viewModel/auth/auth_view_model.dart';
+import 'package:eshop_app/views/auth/clipper/clipper.dart';
+import 'package:eshop_app/views/auth/signup.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -50,15 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
           validator: validateEmail,
           decoration: InputDecoration(
               labelText: 'Enter your email',
-              labelStyle: TextStyle(color: Colors.grey.shade400),
+              labelStyle: const TextStyle(color: Colors.cyan),
               prefixIcon: Icon(
                 Icons.email_outlined,
                 color: Colors.grey.shade400,
               ),
               border: InputBorder.none,
-              focusColor: Colors.grey.shade400,
+              focusColor: primaryColor,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.green.shade400),
+                borderSide: const BorderSide(color:primaryColor ),
                 borderRadius: BorderRadius.circular(20),
               )),
         ),
@@ -83,15 +83,15 @@ class _LoginScreenState extends State<LoginScreen> {
           obscureText: obscurePassword,
           decoration: InputDecoration(
               labelText: 'Enter your password',
-              labelStyle: TextStyle(color: Colors.grey.shade400),
-              prefixIcon: Icon(
+              labelStyle:const  TextStyle(color: Colors.cyan),
+              prefixIcon: const Icon(
                 Icons.password,
-                color: Colors.grey.shade400,
+                color: Colors.cyan,
               ),
               border: InputBorder.none,
-              focusColor: Colors.grey,
+              focusColor: primaryColor,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderSide: const BorderSide(color: primaryColor),
                 borderRadius: BorderRadius.circular(20),
               ),
               suffixIcon: IconButton(
@@ -105,22 +105,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   icon: Icon(
                     iconPassword,
-                    color: Colors.grey.shade400,
+                    color: Colors.cyan,
                   ))),
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: secondryColor,
+      backgroundColor: kBackgroundColor,
       body: Column(children: [
         Stack(
           children: [
             Positioned(
               top: 80,
-              left: 10,
-              child: SvgPicture.asset(
-                'assets/svg/Grabber.svg',
+              left: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'EShop',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Image.asset(
+                    'assets/logo/logo-big.png',
+                    height: 55,
+                    width: 55,
+                  ),
+                ],
               ),
             ),
             CustomPaint(
@@ -142,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Login',
                       style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500,color: primaryColor),
                     ),
                     Text(
                       'Please Sign in to Continue',

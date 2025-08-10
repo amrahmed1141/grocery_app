@@ -1,12 +1,16 @@
+import 'package:eshop_app/viewModel/admin/add_product_view_model.dart';
+import 'package:eshop_app/viewModel/home/get_product_view_model.dart';
+import 'package:eshop_app/views/admin/admin_home.dart';
+import 'package:eshop_app/views/admin/admin_login.dart';
+import 'package:eshop_app/views/auth/login.dart';
+import 'package:eshop_app/views/auth/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery_app/bottom_navigation/bottom_navigation.dart';
-import 'package:grocery_app/firebase_options.dart';
-import 'package:grocery_app/viewModel/auth_view_model.dart';
-import 'package:grocery_app/views/auth/login.dart';
-import 'package:grocery_app/views/auth/signup.dart';
-import 'package:grocery_app/views/details/product_details.dart';
+import 'package:eshop_app/bottom_navigation/bottom_navigation.dart';
+import 'package:eshop_app/firebase_options.dart';
+import 'package:eshop_app/viewModel/auth/auth_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   try {
@@ -15,12 +19,20 @@ Future<void> main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    await Supabase.initialize(
+      url: 'https://oaykeddvzpzaizsnygjd.supabase.co',
+      anonKey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9heWtlZGR2enB6YWl6c255Z2pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMTEzMTAsImV4cCI6MjA2Njc4NzMxMH0.SWK03BXAhiZ6n4756MLxt03efZDBwyabW0_1_tFL9ZsY',
+    );
     print('Firebase initialized successfully');
-    
+    print('supabase initialized successfully');
+
     runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
+          ChangeNotifierProvider(create: (_) => AddProductViewModel()),
+          ChangeNotifierProvider(create: (_)=> GetProductViewModel()),
         ],
         child: const MyApp(),
       ),
@@ -64,6 +76,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -82,7 +100,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ProductDetails(),
+      home: const BottomNavigation(),
     );
   }
 }

@@ -6,11 +6,11 @@ class Rating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(children: [
-      Icon(Icons.star,size: 20,color: Colors.yellow,),
-      Icon(Icons.star,size: 20,color: Colors.yellow,),
-      Icon(Icons.star,size: 20,color: Colors.yellow,),
-      Icon(Icons.star,size: 20,color: Colors.yellow,),
-       Icon(Icons.star,size: 20,color: Colors.black,),
+      Icon(Icons.star,size: 12,color: Colors.yellow,),
+      Icon(Icons.star,size: 12,color: Colors.yellow,),
+      Icon(Icons.star,size: 12,color: Colors.yellow,),
+      Icon(Icons.star,size: 12,color: Colors.yellow,),
+       Icon(Icons.star,size: 12,color: Colors.black,),
     ],);
   }
 }
